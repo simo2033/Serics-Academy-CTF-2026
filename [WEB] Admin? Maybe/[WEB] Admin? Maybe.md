@@ -42,3 +42,16 @@ We check the Cookie and we can see that the site remember the `user: user` as `r
 
 ![AdmMaybe](attachments/Cookie.png)
 
+But if we manipulate the `role` value we can make the site think that user is an Admin
+
+After change it we can see the updated Role in the dashboard
+
+![AdmMaybe](attachments/Dashboard.png)
+
+And as Admin we are authorized to access the Admin Panel
+
+![AdmMaybe](attachments/Admin.png)
+
+
+
+
