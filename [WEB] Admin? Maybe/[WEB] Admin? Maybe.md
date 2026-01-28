@@ -33,6 +33,7 @@ But the prompted hint of the Dashboard
 `
 You're just a regular user. Admin privileges? Not for you, buddy. Maybe if you were more... admin-like?
 `
+
 give me an idea: 
 what if user can be changed as Admin role?
 
