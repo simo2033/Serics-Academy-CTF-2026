@@ -22,3 +22,5 @@ d-----        02/02/2026     11:29                .git
 Let's check for more information about the git file
 
 with the `git log` we can display the full commit history
+
+![git](attachments/git.png)
