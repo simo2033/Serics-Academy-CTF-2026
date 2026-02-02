@@ -24,3 +24,15 @@ Let's check for more information about the git file
 with the `git log` we can display the full commit history
 
 ![git](attachments/git.png)
+
+we can see the commit `9f2e603407a0eaeb301447257b77d55f2ff202e0` that has an interesting information: "Add temporary secret file"
+
+Let's go more deep, use `git show` command to display the details of a specific commit
+
+![git](attachments/git2.png)
+
+And here we can see the flag!
+
+The key point here is that if we have the .git file we can retrive all informations and files of the git even if they were delated.
+Delete a file from the repository does not mean that the file is deleted from the history. 
+Git never forget.
