@@ -41,6 +41,68 @@ Send your payload:
 
 The program prints the address of `puts` in libc directly, causing a libc leak.
 
+What we can try now is to test the behavior of the program.
+
+if we give a few characters as imput we recieve
+
+```
+=== Overflow the Gate ===
+Welcome!
+puts @ 0x7fdcd74d5e50
+Send your payload:
+Bye!
+```
+
+but if we send a big amount of characters
+
+```
+python3 -c "print('A'*200)" | ./chall
+```
+
+we get a **segmentation fault**
+```
+=== Overflow the Gate ===
+Welcome!
+puts @ 0x7f61b7e7be50
+Send your payload:
+Bye!
+Segmentation fault
+```
+This indicates that the buffer on the stack is being overwritten and that the program is attempting to return to an invalid address, confirming the presence of a **buffer overflow**
+
+So what we do now?
+
+If we can identify the offset (the distance between the start of the buffer and the point where the program decides where to return after a function) we can write “useless” data up to that point and then you decide where the program should jump.
+We have to identify the exact number of bytes to write before reaching the return address.
+
+To do so will use a cyclic pattern, which is a special string that does not repeat itself and allows us to understand where we are in the stack.
+
+Execute the program with GDB
+
+`gdb ./chall`
+
+![oftg](attachments/GDB1.png)
+
+than we run it
+
+![oftg](attachments/gdb2.png)
+
+and if we pass the pattern:
+
+`python3 -c "from pwn import *; print(cyclic(200))"`
+
+the program will crash
+
+
+
+
+
+
+
+
+
+
+
 
 
 
