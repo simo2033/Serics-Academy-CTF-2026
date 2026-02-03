@@ -16,14 +16,36 @@ You are provided with the binary and the required runtime files to reproduce the
 
 # Solution
 
-The content of the folder is the following
+So the challenge provides a remote service accessible via TCP.
 
+We are also provided with 
+
+- the service binary (chall)
+- the libc.so.6 library used by the server
+- the dynamic loader ld-linux-x86-64.so.2
+
+The goal is to exploit a vulnerability to obtain a remote shell and retrieve the flag.
+
+if we run the binary
+
+```bash
+$ ./chall
 ```
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a----        19/01/2026     10:09          16360 chall
--a----        19/01/2026     11:03            520 exploit.py
--a----        19/01/2026     10:10         215000 ld-linux-x86-64.so.2
--a----        19/01/2026     10:09        2220400 libc.so.6
+we obtain:
 ```
+=== Overflow the Gate ===
+Welcome!
+puts @ 0x7ff448333e50
+Send your payload:
+```
+
+The program prints the address of `puts` in libc directly, causing a libc leak.
+
+
+
+
+
+
+
+
 
