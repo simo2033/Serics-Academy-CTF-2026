@@ -106,7 +106,9 @@ for i in range(1, 200):
         break
 ```
 
-![oftg](attachments/Offset.png)
+the program crash at 73 bytes
+
+![oftg](overflowthegate/Offset.png)
 
 
 
