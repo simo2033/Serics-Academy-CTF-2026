@@ -75,7 +75,7 @@ So what we do now?
 If we can identify the offset (the distance between the start of the buffer and the point where the program decides where to return after a function) we can write “useless” data up to that point and then you decide where the program should jump.
 We have to identify the exact number of bytes to write before reaching the return address.
 
-To do so we will use a script that with a cyclic pattern, passing recursively a more amount of data trying to find the exact amout where the program crash.
+To do so we will use a python script that with a cyclic pattern, passing recursively a more amount of data trying to find the exact amout where the program crash.
 
 ``` python
 import subprocess
@@ -106,7 +106,7 @@ for i in range(1, 200):
         break
 ```
 
-
+![oftg](attachments/offset.png)
 
 
 
