@@ -106,7 +106,7 @@ for i in range(1, 200):
         break
 ```
 
-![oftg](attachments/offset.png)
+![oftg](attachments/Offset.png)
 
 
 
